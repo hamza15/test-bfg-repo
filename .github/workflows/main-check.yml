@@ -1,0 +1,35 @@
+name: Check main.py execution
+
+on:
+  push:
+    branches:
+      - '**' # Triggers on all branches
+  pull_request:
+    branches:
+      - '**' # Optionally trigger on pull requests
+
+jobs:
+  run-main-py:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x' # Specify the Python version you want to use
+
+    # Step 3: Install dependencies (if any)
+    - name: Install dependencies
+      run: |
+        if [ -f requirements.txt ]; then
+          pip install -r requirements.txt
+        fi
+
+    # Step 4: Run main.py
+    - name: Run main.py
+      run: python src/main.py
